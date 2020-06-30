@@ -2,27 +2,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuModule } from 'primeng/menu';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { counterReducer } from './store/counter.reducer';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { CounterComponent } from './components/counter/counter.component';
 import { HomeComponent } from './components/home/home.component';
+import { CounterComponent } from './components/counter/counter.component';
+import { UsersComponent } from './components/user/users.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    CounterComponent,
     HomeComponent,
+    CounterComponent,
+    UsersComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     MenuModule,
     StoreModule.forRoot({ count: counterReducer }),
   ],

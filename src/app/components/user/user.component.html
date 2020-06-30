@@ -1,0 +1,72 @@
+<table>
+    <tbody>
+        <tr>
+            <th>id</th>
+            <td>
+                <span *ngIf="row.id > 0">
+                    {{row.id}}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>name</th>
+            <td>
+                <input [(ngModel)]="row.name" />
+            </td>
+        </tr>
+        <tr>
+            <th>hight</th>
+            <td>
+                <input [(ngModel)]="row.hight" />
+            </td>
+        </tr>
+        <tr>
+            <th>birthday</th>
+            <td>
+                <input type="date" [(ngModel)]="row.birthday" />
+            </td>
+        </tr>
+        <tr>
+            <th>dept</th>
+            <td>
+                <select [(ngModel)]="row.dept">
+                    <option [value]="defItem.value">{{defItem.name}}</option>
+                    <option *ngFor="let item of depts"
+                    [value]="item.value">
+                        {{item.name}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>
+            proj
+            <input type="checkbox" (change) ="selectProjAll($event)" >
+            </th>
+            <td>
+                <span *ngFor="let item of projs">
+                    <label>
+                        <input type="checkbox"
+                        [(ngModel)]="item.checked" />
+                        {{item.name}}
+                    </label>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>photo</th>
+            <td>
+                <ng-container *ngIf="photo; else elseTemplate">
+                    <img height="200" *ngIf="photo" src="{{imgUrl}}/img/{{photo}}" />
+                    <input type="file" (change)="getFile($event)" />
+                </ng-container>
+                <ng-template #elseTemplate>
+                    <input type="file" (change)="getFile($event)" />
+                </ng-template>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<button (click)="onBack.emit()">back</button>
+<button (click)="save()">save</button>

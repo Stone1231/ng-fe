@@ -13,7 +13,7 @@ export class HomeService {
     }
 
     get() {
-        let endpointUrl = this.url;
+        const endpointUrl = this.url;
         return this.http.get(endpointUrl);
     }
 }

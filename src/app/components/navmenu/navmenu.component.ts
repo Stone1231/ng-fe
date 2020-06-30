@@ -20,7 +20,7 @@ export class NavMenuComponent implements OnInit {
     this.items = [
       { label: 'Home', icon: 'pi pi-home', routerLink: ['/home'] },
       { label: 'Counter', icon: 'pi pi-star', routerLink: ['/counter'] },
-      { label: 'Users', icon: 'pi pi-user', routerLink: ['/users'] },
+      { label: 'User', icon: 'pi pi-user', routerLink: ['/user'] },
     ];
 
     // this.items = [
