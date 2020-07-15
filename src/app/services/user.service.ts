@@ -4,14 +4,16 @@ import { User } from '../models/user.model';
 import {environment} from '../../environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
     private readonly url: string;
     constructor(protected http: HttpClient) {
         this.url = environment.BASE_URL + '/user';
     }
 
-    getSingle(userId?: string) {
+    getSingle(userId?: string): Observable<User> {
       const endpointUrl = userId ? `${this.url}/${userId}` : this.url;
       return this.http.get<User>(endpointUrl);
     }
@@ -24,14 +26,14 @@ export class UserService {
             environment.httpOptions);
     }
 
-    getAll(): Observable<User[]> {
+    public getAll(): Observable<User[]> {
         const endpointUrl = this.url;
         return this.http.get<User[]>(endpointUrl);
     }
 
-    put(userId?: string, model?: User) {
+    put(userId?: string, model?: User): Observable<User> {
         const endpointUrl = userId ? `${this.url}/${userId}` : this.url;
-        return this.http.put(
+        return this.http.put<User>(
             endpointUrl,
             model, // JSON.stringify(model),
             environment.httpOptions);
@@ -48,9 +50,9 @@ export class UserService {
             environment.fileOptions);
     }
 
-    post(model: User) {
+    post(model: User): Observable<User> {
         const endpointUrl = this.url;
-        return this.http.post(
+        return this.http.post<User>(
             endpointUrl,
             model, // JSON.stringify(model),
             environment.httpOptions);

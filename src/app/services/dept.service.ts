@@ -4,7 +4,9 @@ import { Dept } from '../models/dept.model';
 import {environment} from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DeptService {
   private readonly url: string;
   constructor(protected http: HttpClient) {
