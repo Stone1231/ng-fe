@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
+import { ErrorComponent} from './components/error/error.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { UsersComponent } from './components/user/users.component';
 import { UserComponent } from './components/user/user.component';
@@ -22,6 +23,7 @@ import { effects, reducers } from './store';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    ErrorComponent,
     CounterComponent,
     UsersComponent,
     UserComponent,
