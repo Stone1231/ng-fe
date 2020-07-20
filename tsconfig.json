@@ -23,6 +23,7 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
   },
+  "allowSyntheticDefaultImports": true,
   "paths": {
     "@app/*": ["src/app/*"]
   }

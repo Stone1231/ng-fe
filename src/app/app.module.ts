@@ -14,11 +14,8 @@ import { UserComponent } from './components/user/user.component';
 import { UsersComponent as UsersPlusComponent } from './components/user-plus/users.component';
 import { UserComponent as UserPlusComponent } from './components/user-plus/user.component';
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './store/counter/counter.reducer';
-import { userReducer } from './store/user/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { UserEffects } from './store/user/user.effects';
-// import { effects } from './store/user/user.effects';
+import { effects, reducers } from './store';
 
 @NgModule({
   declarations: [
@@ -38,8 +35,8 @@ import { UserEffects } from './store/user/user.effects';
     HttpClientModule,
     FormsModule,
     MenuModule,
-    StoreModule.forRoot({ count: counterReducer, user: userReducer }),
-    EffectsModule.forRoot([UserEffects]),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,9 +3,9 @@ import { tap, withLatestFrom, concatMap, map, mergeMap, catchError } from 'rxjs/
 import { of } from 'rxjs';
 import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { UserState } from './user.reducer';
+import { AppState } from '../index';
 import { UserService } from '../../services/user.service';
-import { getkeyWord } from './user.selectors';
+import { getKeyWord, getRows } from './user.selectors';
 import {
   CreateAction,
   CreateSuccessAction,
@@ -30,7 +30,7 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private userService: UserService,
-    private store: Store<UserState>,
+    private store: Store<AppState>, // Store<UserState>,
   ) {}
 
   @Effect({ dispatch: true })
@@ -48,29 +48,31 @@ export class UserEffects {
   ));
 
   @Effect({ dispatch: true })
-  query$ = createEffect( () => this.actions$.pipe(
-    ofType<QueryAction>(UserActionTypes.Query),
-    withLatestFrom(this.store.select(getkeyWord)),
-    mergeMap(([action, keyWord]) => this.userService.getQuery(keyWord)),
-    catchError(error => of(null)),
-    concatMap(response => {
-      return [
-        new LoadListSuccessAction({
-          users: response ? response.data : null
-        })
-      ];
-    }),
-  ));
+  query$ = createEffect( () => {
+    return this.actions$.pipe(
+      ofType<QueryAction>(UserActionTypes.Query),
+      withLatestFrom(this.store.select(getKeyWord)),
+      mergeMap(([action, keyWord]) => this.userService.getQuery(keyWord)),
+      catchError(error => of(new Array<User>())),
+      concatMap(response => {
+        return [
+          new LoadListSuccessAction({
+            users: response ? response : null
+          })
+        ];
+      }),
+    );
+  });
 
   @Effect({ dispatch: true })
   loadSingle$ = createEffect( () => this.actions$.pipe(
     ofType<LoadAction>(UserActionTypes.Load),
     mergeMap(action => this.userService.getSingle(action.payload.id)),
-    catchError(error => of(null)),
+    catchError(error => of(new User())),
     concatMap(response => {
       return [
         new LoadSuccessAction({
-          user: response ? response.data : null
+          user: response ? response : null
         })
       ];
     }),
@@ -80,11 +82,11 @@ export class UserEffects {
   create$ = createEffect( () => this.actions$.pipe(
     ofType<CreateAction>(UserActionTypes.Create),
     mergeMap(action => this.userService.post(action.payload.user)),
-    catchError(error => of(null)),
+    catchError(error => of(new User())),
     concatMap(response => {
       return [
         new CreateSuccessAction({
-          user: response ? response.data : null
+          user: response ? response : null
         }),
         new QueryAction(),
       ];
@@ -95,11 +97,11 @@ export class UserEffects {
   update$ = createEffect( () => this.actions$.pipe(
     ofType<UpdateAction>(UserActionTypes.Update),
     mergeMap(action => this.userService.put(action.payload.user.id.toString(), action.payload.user)),
-    catchError(error => of(null)),
+    catchError(error => of(new User())),
     concatMap(response => {
       return [
         new UpdateSuccessAction({
-          user: response ? response.data : null
+          user: response ? response : null
         }),
         new QueryAction(),
       ];
@@ -119,5 +121,3 @@ export class UserEffects {
     }),
   ));
 }
-
-export const effects: any[] = [ UserEffects ];

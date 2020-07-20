@@ -1,15 +1,11 @@
 // NGRX
 import { createSelector } from '@ngrx/store';
-
 import { UserState } from './user.reducer';
-
-export interface AppState {
-  user: UserState;
-}
+import { AppState } from '../index';
 
 export const selectUserState = (state: AppState) => state.user;
 
-export const getkeyWord = createSelector(
+export const getKeyWord = createSelector(
   selectUserState,
   (m: UserState) => m.keyWord
 );
