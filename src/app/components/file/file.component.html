@@ -1,0 +1,36 @@
+<div class="card-wide mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">File upload</h2>
+    </div>
+</div>
+<div class="card-wide mdl-card mdl-shadow--2dp">
+    <table>
+        <tr>
+            <td>file1</td>
+            <td>
+                <input type="file" (change)="getFile1($event)" />
+                <button (click)="saveFile1()">save file1</button>
+            </td>
+        </tr>
+        <tr>
+            <td>file2</td>
+            <td>
+                <input type="file" (change)="getFile2($event)" />
+                <button (click)="saveFile2()">save file1 & file2</button>
+            </td>
+        </tr>
+        <tr>
+            <td>files</td>
+            <td>
+                <input type="file" multiple (change)="getFiles($event)" />
+                <button (click)="saveFiles()">save files</button>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">result　</td>
+            <td>
+                <span *ngFor="let item of fileNames">{{item}} <br></span>
+            </td>
+        </tr>
+    </table>
+</div>

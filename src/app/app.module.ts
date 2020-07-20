@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent} from './components/error/error.component';
+import { FileComponent} from './components/file/file.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { UsersComponent } from './components/user/users.component';
 import { UserComponent } from './components/user/user.component';
@@ -24,6 +25,7 @@ import { effects, reducers } from './store';
     NavMenuComponent,
     HomeComponent,
     ErrorComponent,
+    FileComponent,
     CounterComponent,
     UsersComponent,
     UserComponent,
