@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MenuModule } from 'primeng/menu';
 import { NgModule } from '@angular/core';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -47,6 +48,7 @@ import { effects, reducers } from './store';
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot(effects),
     JwtModule.forRoot({config: {}}),
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [],
   bootstrap: [AppComponent],

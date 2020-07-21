@@ -10,6 +10,7 @@ import {
   CreateAction,
   CreateSuccessAction,
   FailureAction,
+  InitAction,
   LoadAction,
   LoadAllAction,
   LoadListSuccessAction,
@@ -63,6 +64,25 @@ export class UserEffects {
       }),
     );
   });
+
+  @Effect({ dispatch: true })
+  initSingle$ = createEffect( () => this.actions$.pipe(
+    ofType<InitAction>(UserActionTypes.Init),
+    catchError(error => of(new User())),
+    map(response => {
+      const user:User = {
+        id: 0,
+        name: '',
+        hight: 0,
+        dept: 0,
+        projs: [],
+        photo: '',
+        birthday: '0000-01-01'
+      };
+      return new LoadSuccessAction({
+          user: user});
+    }),
+  ));
 
   @Effect({ dispatch: true })
   loadSingle$ = createEffect( () => this.actions$.pipe(

@@ -33,6 +33,7 @@ export class UserService {
 
     put(userId?: string, model?: User): Observable<User> {
         const endpointUrl = userId ? `${this.url}/${userId}` : this.url;
+        console.log("put api");
         return this.http.put<User>(
             endpointUrl,
             model, // JSON.stringify(model),
@@ -51,14 +52,16 @@ export class UserService {
     }
 
     post(model: User): Observable<User> {
-        const endpointUrl = this.url;
-        return this.http.post<User>(
-            endpointUrl,
-            model, // JSON.stringify(model),
-            environment.httpOptions);
+      const endpointUrl = this.url;
+      console.log("post api");
+      return this.http.post<User>(
+        endpointUrl,
+        model, // JSON.stringify(model),
+        environment.httpOptions);
     }
 
     delete(userId?: string) {
+        console.log("delete api");
         const endpointUrl = userId ? `${this.url}/${userId}` : this.url;
         return this.http.delete(endpointUrl);
     }

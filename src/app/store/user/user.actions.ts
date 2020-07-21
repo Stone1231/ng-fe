@@ -5,6 +5,7 @@ import { User } from '../../models/user.model';
 export enum UserActionTypes {
   LoadAll = '[User] Load all',
   Load = '[User] Load',
+  Init = '[User] Init',
   QueryKeyWord = '[User] Query KeyWord',
   Query = '[User] Query',
   Create = '[User] Create',
@@ -15,6 +16,7 @@ export enum UserActionTypes {
   CreateSuccess = '[User] Create success',
   UpdateSuccess = '[User] Update success',
   RemoveSuccess = '[User] Remove success',
+  BackList = '[User] Back list',
   Failure = '[User] Failure',
 }
 
@@ -46,6 +48,11 @@ export class LoadAction implements Action {
 export class LoadSuccessAction implements Action {
   readonly type = UserActionTypes.LoadSuccess;
   constructor(public payload: { user: User }) { }
+}
+
+export class InitAction implements Action {
+  readonly type = UserActionTypes.Init;
+  constructor() {}
 }
 
 export class CreateAction implements Action {
@@ -83,5 +90,10 @@ export class FailureAction implements Action {
   constructor(public payload: { err: {concern: 'CREATE' | 'PATCH', error: any} }) { }
 }
 
-export type UserActions = LoadAllAction | LoadAction | QueryKeyWordAction | QueryAction | CreateAction | UpdateAction | RemoveAction
-  | LoadListSuccessAction | LoadSuccessAction | CreateSuccessAction | UpdateSuccessAction | RemoveSuccessAction | FailureAction;
+export class BackListAction implements Action {
+  readonly type = UserActionTypes.BackList;
+  constructor() { }
+}
+
+export type UserActions = LoadAllAction | LoadAction | QueryKeyWordAction | QueryAction | InitAction | CreateAction | UpdateAction | RemoveAction
+  | LoadListSuccessAction | LoadSuccessAction | CreateSuccessAction | UpdateSuccessAction | RemoveSuccessAction | FailureAction | BackListAction;

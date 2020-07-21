@@ -14,3 +14,13 @@ export const getRows = createSelector(
   selectUserState,
   (m: UserState) => m.rows
 );
+
+export const getRow = createSelector(
+  selectUserState,
+  (m: UserState) => m.row
+);
+
+export const getView = createSelector(
+  selectUserState,
+  (m: UserState) => m.vType
+);

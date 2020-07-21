@@ -25,7 +25,7 @@ export function userReducer(state = initialUserState, action: UserActions): User
       return {
         ...state,
         rows: action.payload.users,
-        // vType: 0,
+        vType: 0,
       };
     }
     case UserActionTypes.LoadSuccess: {
@@ -39,6 +39,12 @@ export function userReducer(state = initialUserState, action: UserActions): User
       return {
         ...state,
         keyWord: action.payload.keyWord,
+      };
+    }
+    case UserActionTypes.BackList: {
+      return {
+        ...state,
+        vType: 0,
       };
     }
     case UserActionTypes.CreateSuccess:
