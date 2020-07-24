@@ -1,11 +1,11 @@
-<table>
+<table *ngIf="row !== null">
   <tbody>
   <tr>
     <th>id</th>
     <td>
-                <span *ngIf="row.id > 0">
-                    {{row.id}}
-                </span>
+      <span *ngIf="row && row.id > 0">
+        {{row.id}}
+      </span>
     </td>
   </tr>
   <tr>

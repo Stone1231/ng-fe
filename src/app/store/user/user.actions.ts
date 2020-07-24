@@ -87,7 +87,7 @@ export class RemoveSuccessAction implements Action {
 
 export class FailureAction implements Action {
   readonly type = UserActionTypes.Failure;
-  constructor(public payload: { err: {concern: 'CREATE' | 'PATCH', error: any} }) { }
+  constructor(public payload: { err: string }) { }
 }
 
 export class BackListAction implements Action {

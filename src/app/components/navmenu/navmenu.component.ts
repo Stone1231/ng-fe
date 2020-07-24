@@ -18,31 +18,24 @@ export class NavMenuComponent implements OnInit {
     });
 
     this.items = [
-      { label: 'Home', icon: 'pi pi-home', routerLink: ['/home'] },
-      { label: 'Error', icon: 'pi pi-times', routerLink: ['/error'] },
-      { label: 'File', icon: 'pi pi-file', routerLink: ['/file'] },
-      { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/login'] },
-      { label: 'Login After', icon: 'pi pi-check', routerLink: ['/login-after'] },
-      { label: 'Counter', icon: 'pi pi-star', routerLink: ['/counter'] },
-      { label: 'User', icon: 'pi pi-user', routerLink: ['/user'] },
-      { label: 'User Redux', icon: 'pi pi-user', routerLink: ['/user-plus'] },
+      {
+        label: "Base",
+        items: [
+          { label: 'Home', icon: 'pi pi-home', routerLink: ['/home'] },
+          { label: 'Error', icon: 'pi pi-times', routerLink: ['/error'] },
+          { label: 'File', icon: 'pi pi-file', routerLink: ['/file'] },
+          { label: 'Login', icon: 'pi pi-sign-in', routerLink: ['/login'] },
+          { label: 'Login After', icon: 'pi pi-check', routerLink: ['/login-after'] },
+          { label: 'User', icon: 'pi pi-user', routerLink: ['/user'] },
+        ],
+      },
+      {
+        label: "Redux",
+        items: [
+          { label: 'Counter', icon: 'pi pi-star', routerLink: ['/counter'] },
+          { label: 'User', icon: 'pi pi-user', routerLink: ['/user-plus'] },
+        ],
+      },
     ];
-
-    // this.items = [
-    //   {
-    //     label: "File",
-    //     items: [
-    //       { label: "New", icon: "pi pi-fw pi-plus" },
-    //       { label: "Download", icon: "pi pi-fw pi-download" },
-    //     ],
-    //   },
-    //   {
-    //     label: "Edit",
-    //     items: [
-    //       { label: "Add User", icon: "pi pi-fw pi-user-plus" },
-    //       { label: "Remove User", icon: "pi pi-fw pi-user-minus" },
-    //     ],
-    //   },
-    // ];
   }
 }
