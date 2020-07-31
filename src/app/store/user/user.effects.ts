@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { tap, withLatestFrom, concatMap, map, mergeMap, catchError } from 'rxjs/operators';
+import { tap, withLatestFrom, concatMap, map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {Actions, Effect, ofType} from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { AppState } from '../index';
 import { UserService } from '../../services/user.service';
@@ -68,7 +68,7 @@ export class UserEffects {
       const user:User = {
         id: 0,
         name: '',
-        hight: 0,
+        hight: null,
         dept: 0,
         projs: [],
         photo: '',
@@ -83,13 +83,8 @@ export class UserEffects {
   loadSingle$ = this.actions$.pipe(
     ofType<LoadAction>(UserActionTypes.Load),
     mergeMap(action => this.userService.getSingle(action.payload.id)),
-    concatMap(response => {
-      return [
-        new LoadSuccessAction({
-          user: response ? response : null
-        })
-      ];
-    }),
+    map(response => new LoadSuccessAction({user: response ? response : null})),
+    catchError(error => of(new FailureAction({err: error.message}))),
   );
 
   @Effect({ dispatch: true })

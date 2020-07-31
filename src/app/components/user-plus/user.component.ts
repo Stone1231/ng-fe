@@ -30,7 +30,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private store: Store<AppState>,) {
   }
 
-  public row: User;
+  public row: User = new User();
   photoFile: File;
   photo: string; // 為了控制只bind1次,把這個欄位抽出來
   public imgUrl = environment.IMG_URL;
@@ -59,6 +59,8 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   async save() {
+    this.row.projs = [];
+    console.log(this.projs.length);
     this.row.projs = this.projs.filter(m => m.checked).map(m => m.value);
     if (this.photoFile) {
       const fileName = await this.service.postFile(this.photoFile).toPromise();
