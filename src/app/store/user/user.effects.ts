@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { tap, withLatestFrom, concatMap, map, mergeMap, catchError, switchMap } from 'rxjs/operators';
+import {tap, withLatestFrom, concatMap, map, mergeMap, catchError, switchMap, finalize} from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,6 @@ import { getKeyWord, getRows } from './user.selectors';
 import {
   CreateAction,
   CreateSuccessAction,
-  FailureAction,
   InitAction,
   LoadAction,
   LoadAllAction,
@@ -24,6 +23,7 @@ import {
   UserActionTypes
 } from './user.actions';
 import { User } from '../../models';
+import {FailureAction} from "../actions";
 
 @Injectable()
 export class UserEffects {
@@ -37,28 +37,32 @@ export class UserEffects {
   @Effect({ dispatch: true })
   loadAll$ = this.actions$.pipe(
     ofType<LoadAllAction>(UserActionTypes.LoadAll),
-    mergeMap(() => this.userService.getAll()),
-    concatMap(response => {
-      return [
-        new LoadListSuccessAction({
-          users: response
-        })
-      ];
-    }),
+    mergeMap(() => this.userService.getAll().pipe(
+      concatMap(response => {
+        return [
+          new LoadListSuccessAction({
+            users: response
+          })
+        ];
+      }),
+      catchError(error => of(new FailureAction({err: error.message}))),
+    )),
   );
 
   @Effect({ dispatch: true })
   query$ = this.actions$.pipe(
     ofType<QueryAction>(UserActionTypes.Query),
     withLatestFrom(this.store.select(getKeyWord)),
-    mergeMap(([action, keyWord]) => this.userService.getQuery(keyWord)),
-    concatMap(response => {
-      return [
-        new LoadListSuccessAction({
-          users: response ? response : null
-        })
-      ];
-    }),
+    mergeMap(([action, keyWord]) => this.userService.getQuery(keyWord).pipe(
+      concatMap(response => {
+        return [
+          new LoadListSuccessAction({
+            users: response ? response : null
+          })
+        ];
+      }),
+      catchError(error => of(new FailureAction({err: error.message}))),
+    )),
   );
 
   @Effect({ dispatch: true })
@@ -82,52 +86,57 @@ export class UserEffects {
   @Effect({ dispatch: true })
   loadSingle$ = this.actions$.pipe(
     ofType<LoadAction>(UserActionTypes.Load),
-    mergeMap(action => this.userService.getSingle(action.payload.id)),
-    map(response => new LoadSuccessAction({user: response ? response : null})),
-    catchError(error => of(new FailureAction({err: error.message}))),
+    mergeMap(action => this.userService.getSingle(action.payload.id).pipe(
+      map(response => new LoadSuccessAction({user: response ? response : null})),
+      catchError(error => of(new FailureAction({err: error.message}))),
+    )),
   );
 
   @Effect({ dispatch: true })
   create$ = this.actions$.pipe(
     ofType<CreateAction>(UserActionTypes.Create),
-    mergeMap(action => this.userService.post(action.payload.user)),
-    concatMap(response => {
-      return [
-        new CreateSuccessAction({
-          user: response ? response : null
-        }),
-        new QueryAction(),
-      ];
-    }),
-    catchError(error => of(new FailureAction({err: error.message}))),
+    mergeMap(action => this.userService.post(action.payload.user).pipe(
+      concatMap(response => {
+        return [
+          new CreateSuccessAction({
+            user: response ? response : null
+          }),
+          new QueryAction(),
+        ];
+      }),
+      catchError(error => of(new FailureAction({err: error.message}))),
+      finalize(() => console.log("create$ finalize called!")),
+    )),
   );
 
   @Effect({ dispatch: true })
   update$ = this.actions$.pipe(
     ofType<UpdateAction>(UserActionTypes.Update),
-    mergeMap(action => this.userService.put(action.payload.user.id.toString(), action.payload.user)),
-    concatMap(response => {
-      return [
-        new UpdateSuccessAction({
-          user: response ? response : null
-        }),
-        new QueryAction(),
-      ];
-    }),
-    catchError(error => of(new FailureAction({err: error.message}))),
+    mergeMap(action => this.userService.put(action.payload.user.id.toString(), action.payload.user).pipe(
+      concatMap(response => {
+        return [
+          new UpdateSuccessAction({
+            user: response ? response : null
+          }),
+          new QueryAction(),
+        ];
+      }),
+      catchError(error => of(new FailureAction({err: error.message}))),
+    )),
   );
 
   @Effect({ dispatch: true })
   delete$ = this.actions$.pipe(
     ofType<RemoveAction>(UserActionTypes.Remove),
-    mergeMap(action => this.userService.delete(action.payload.id.toString())),
-    concatMap(response => {
-      return [
-        new RemoveSuccessAction(),
-        new QueryAction(),
-      ];
-    }),
-    catchError(error => of(new FailureAction({err: error.message}))),
+    mergeMap(action => this.userService.delete(action.payload.id.toString()).pipe(
+      concatMap(response => {
+        return [
+          new RemoveSuccessAction(),
+          new QueryAction(),
+        ];
+      }),
+      catchError(error => of(new FailureAction({err: error.message}))),
+    )),
   );
 
   @Effect({ dispatch: false })
@@ -139,14 +148,6 @@ export class UserEffects {
     ),
     tap(response => {
       window.alert("Success!");
-    }),
-  );
-
-  @Effect({ dispatch: false })
-  showAlertOnFailure$ = this.actions$.pipe(
-    ofType<FailureAction>(UserActionTypes.Failure),
-    tap(response => {
-      window.alert(response.payload.err);
     }),
   );
 }

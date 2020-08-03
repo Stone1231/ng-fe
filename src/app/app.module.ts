@@ -10,7 +10,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
-import { ErrorComponent} from './components/error/error.component';
+import { ErrorComponent } from './components/error/error.component';
+import { ErrorComponent as ErrorPlusComponent } from './components/error-plus/error.component';
 import { FileComponent} from './components/file/file.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginAfterComponent } from './components/login/loginAfter.component';
@@ -29,6 +30,7 @@ import { effects, reducers } from './store';
     NavMenuComponent,
     HomeComponent,
     ErrorComponent,
+    ErrorPlusComponent,
     FileComponent,
     LoginComponent,
     LoginAfterComponent,

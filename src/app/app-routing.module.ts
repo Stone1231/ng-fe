@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ErrorComponent } from './components/error/error.component';
+import { ErrorComponent as ErrorPlusComponent } from './components/error-plus/error.component';
 import { FileComponent } from './components/file/file.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginAfterComponent } from './components/login/loginAfter.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: 'counter', component: CounterComponent },
     { path: 'user', component: UsersComponent },
     { path: 'user-plus', component: UsersPlusComponent },
+    { path: 'error-plus', component: ErrorPlusComponent },
 ];
 
 @NgModule({

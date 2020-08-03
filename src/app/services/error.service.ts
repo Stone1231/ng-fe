@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {environment} from '../../environments/environment'
 import { map, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,18 @@ export class ErrorService {
 
     get() {
       const endpointUrl = this.url;
+      return this.http.get(endpointUrl);
+    }
+
+    handle() {
+      const endpointUrl = this.url;
       return this.http.get(endpointUrl).pipe(
         catchError(this.handleError)
       );
+    }
+
+    throw() {
+      return throwError(new Error("error happen!!"));
     }
 
     private handleError(error: any) {

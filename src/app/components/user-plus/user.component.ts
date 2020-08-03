@@ -46,12 +46,13 @@ export class UserComponent implements OnInit, OnDestroy {
     await this.getProjItems();
     this.loadSingle$ = this.store.select(getRow).subscribe(
       (row: User) => {
-        this.row = cloneDeep(row);
+        this.row = cloneDeep(row); // row (ps: error!無法修改);
         this.photo = this.row.photo;
         this.projs.map(m =>
           m.checked = this.row.projs && (-1 !== this.row.projs.indexOf(m.value))
         );
       });
+    console.log('ngOnInit');
   }
 
   ngOnDestroy(): void {
@@ -66,10 +67,13 @@ export class UserComponent implements OnInit, OnDestroy {
       const fileName = await this.service.postFile(this.photoFile).toPromise();
       this.row.photo = fileName;
     }
+
+    // 這邊使用cloneDeep, 因為萬一有error this.row已經跟store綁定會無法修改
+    // todo 以後再調整成透過url params call api取this.row
     if (this.row.id > 0) {
-      this.store.dispatch(new UpdateAction({user: this.row}));
+      this.store.dispatch(new UpdateAction({user: cloneDeep(this.row)}));
     } else {
-      this.store.dispatch(new CreateAction({user: this.row}));
+      this.store.dispatch(new CreateAction({user: cloneDeep(this.row)}));
     }
   }
 

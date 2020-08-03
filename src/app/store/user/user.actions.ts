@@ -17,7 +17,6 @@ export enum UserActionTypes {
   UpdateSuccess = '[User] Update success',
   RemoveSuccess = '[User] Remove success',
   BackList = '[User] Back list',
-  Failure = '[User] Failure',
 }
 
 export class LoadAllAction implements Action {
@@ -85,15 +84,10 @@ export class RemoveSuccessAction implements Action {
   constructor() {}
 }
 
-export class FailureAction implements Action {
-  readonly type = UserActionTypes.Failure;
-  constructor(public payload: { err: string }) { }
-}
-
 export class BackListAction implements Action {
   readonly type = UserActionTypes.BackList;
   constructor() { }
 }
 
 export type UserActions = LoadAllAction | LoadAction | QueryKeyWordAction | QueryAction | InitAction | CreateAction | UpdateAction | RemoveAction
-  | LoadListSuccessAction | LoadSuccessAction | CreateSuccessAction | UpdateSuccessAction | RemoveSuccessAction | FailureAction | BackListAction;
+  | LoadListSuccessAction | LoadSuccessAction | CreateSuccessAction | UpdateSuccessAction | RemoveSuccessAction | BackListAction;

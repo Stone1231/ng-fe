@@ -14,7 +14,7 @@ export class ErrorComponent implements OnInit {
   public res: string;
 
   ngOnInit() {
-    this.service.get().subscribe(d => {
+    this.service.handle().subscribe(d => {
         this.res = d.toString();
     });
 }

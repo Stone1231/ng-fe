@@ -5,6 +5,10 @@ import { counterReducer} from './counter/counter.reducer';
 import { userReducer } from './user/user.reducer';
 import { UserState } from './user/user.reducer';
 import { UserEffects } from './user/user.effects';
+// error
+import { ErrorEffects } from "./error/error.effects";
+// share
+import { ResultEffects } from "./effects";
 
 export interface AppState {
   count: number;
@@ -16,4 +20,4 @@ export const reducers: ActionReducerMap<AppState> = {
   user: userReducer,
 };
 
-export const effects: any[] = [ UserEffects ];
+export const effects: any[] = [ UserEffects, ErrorEffects, ResultEffects ];
