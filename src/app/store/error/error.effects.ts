@@ -71,9 +71,10 @@ export class ErrorEffects {
     ofType<GetErrAction>(ErrorActionTypes.GetBadErr),
     mergeMap(() => this.errService.get()),
     map(response => new SuccessAction()),
-    // catchError(error => of(null)), // 都會壞掉
-    catchError(error => of(new FailureAction({err: error.message}))),
+    // catchError(error => of(null)), // 所有Effect都會失效
+    catchError(error => of(new FailureAction({err: error.message}))), // 執行一次後,再也不會執行
     finalize(() => console.log('getBadErr$ finalize called!')),
+    // map(response => new SuccessAction()), // of(null)時 要再回傳這才不會讓所有Effect都失效
   );
 
   @Effect({ dispatch: true })
