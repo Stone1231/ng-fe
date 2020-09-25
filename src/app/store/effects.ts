@@ -1,5 +1,5 @@
 import { Actions, Effect, ofType } from "@ngrx/effects";
-import { ResultActionTypes, FailureAction, SuccessAction } from "./actions";
+import { ResultActionTypes, FailureAction, SuccessAction } from "@app/store/actions";
 import { tap } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 

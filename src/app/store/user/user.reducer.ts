@@ -1,5 +1,5 @@
-import { UserActions, UserActionTypes } from './user.actions';
-import { User, Dept, Proj, Item } from '../../models';
+import { UserActions, UserActionTypes } from "./user.actions";
+import { User, Dept, Proj, Item } from "@app/models";
 
 export interface UserState {
   row: User;
@@ -15,11 +15,14 @@ export const initialUserState: UserState = {
   rows: new Array<User>(),
   depts: new Array<Dept>(),
   projs: new Array<Proj>(),
-  keyWord: '',
+  keyWord: "",
   vType: 0,
 };
 
-export function userReducer(state = initialUserState, action: UserActions): UserState {
+export function userReducer(
+  state = initialUserState,
+  action: UserActions
+): UserState {
   switch (action.type) {
     case UserActionTypes.LoadListSuccess: {
       return {
