@@ -31,8 +31,8 @@ import {
   UpdateSuccessAction,
   UserActionTypes,
 } from "./user.actions";
-import { User } from "../../models";
-import { FailureAction } from "../actions";
+import { User } from "@app/models";
+import { FailureAction } from "@app/store/actions";
 
 @Injectable()
 export class UserEffects {
